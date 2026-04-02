@@ -1,12 +1,3 @@
----
-title: ClipQualityEnv
-emoji: ⚡
-colorFrom: purple
-colorTo: gray
-sdk: docker
-pinned: false
----
-
 # ClipQualityEnv
 
 ## 1. Environment Description and Motivation
