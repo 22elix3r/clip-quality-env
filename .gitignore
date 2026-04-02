@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.DS_Store
+state/
+.copilot/skills/
+AGENT_SKILLS.md
+CLIP_QUALITY_ENV_BUILD_GUIDE.md
+hackathon_requirements.md

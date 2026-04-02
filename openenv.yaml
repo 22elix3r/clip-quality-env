@@ -1,0 +1,66 @@
+name: clip_quality_env
+version: "1.0.0"
+description: >
+  Self-evolving RL environment for LoRA dataset clip quality classification.
+  Agent classifies clip metadata as KEEP/BORDERLINE/REJECT in Easy->Medium->Hard trajectory.
+
+author: "ClipQualityEnv Team"
+license: "MIT"
+
+tasks:
+  - id: easy_classification
+    description: Classify clips with clearly dominant quality signals.
+    difficulty: easy
+  - id: medium_classification
+    description: Classify clips with one or two borderline features.
+    difficulty: medium
+  - id: hard_classification
+    description: Classify clips with conflicting signals and ambiguous tradeoffs.
+    difficulty: hard
+
+observation_space:
+  type: object
+  required: [step, rubric_version, rubric_summary, clip_metadata, history]
+  properties:
+    step:
+      type: integer
+      minimum: 1
+      maximum: 3
+    rubric_version:
+      type: integer
+      minimum: 1
+    rubric_summary:
+      type: string
+    clip_metadata:
+      type: object
+    history:
+      type: array
+
+action_space:
+  type: object
+  required: [label, reasoning, confidence]
+  properties:
+    label:
+      type: string
+      enum: [KEEP, BORDERLINE, REJECT]
+    reasoning:
+      type: string
+    confidence:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+
+reward_range: [0.0, 1.0]
+
+constraints:
+  timeout_minutes: 20
+  cpu: 2
+  memory_gb: 8
+
+runtime_config:
+  optional_env_vars:
+    - REAL_CLIPS_MANIFEST
+
+entrypoints:
+  environment: "clip_quality_env.env:ClipQualityEnv"
+  inference: "inference.py"
